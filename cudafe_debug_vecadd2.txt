@@ -1,0 +1,184 @@
+mergeKernel: found originalAlloc   %h_a = alloca float*, align 8
+mergeKernel: found originalAlloc user  %ldHost = load float*, float** %h_a
+mergeKernel: found originalAlloc user  %59 = load float*, float** %h_a, align 8, !dbg !1108
+mergeKernel: found originalAlloc user  %49 = load float*, float** %h_a, align 8, !dbg !1095
+mergeKernel: found originalAlloc user  %16 = load float*, float** %h_a, align 8, !dbg !1060
+mergeKernel: found originalAlloc user  %5 = load float*, float** %h_a, align 8, !dbg !1034
+mergeKernel: found originalAlloc user  store float* %0, float** %h_a, align 8, !dbg !1013
+mergeKernel: found originalAlloc store:  store float* %0, float** %h_a, align 8, !dbg !1013
+mergeKernel: found originalAlloc cast:  %0 = bitcast i8* %call to float*, !dbg !1015
+mergeKernel: found originalAlloc ci:  %call = call noalias i8* @malloc(i64 40) #9, !dbg !1014
+mergeKernel: found originalAlloc   %h_b = alloca float*, align 8
+mergeKernel: found originalAlloc user  %ldHost1 = load float*, float** %h_b
+mergeKernel: found originalAlloc user  %61 = load float*, float** %h_b, align 8, !dbg !1112
+mergeKernel: found originalAlloc user  %52 = load float*, float** %h_b, align 8, !dbg !1100
+mergeKernel: found originalAlloc user  %20 = load float*, float** %h_b, align 8, !dbg !1065
+mergeKernel: found originalAlloc user  %8 = load float*, float** %h_b, align 8, !dbg !1040
+mergeKernel: found originalAlloc user  store float* %1, float** %h_b, align 8, !dbg !1018
+mergeKernel: found originalAlloc store:  store float* %1, float** %h_b, align 8, !dbg !1018
+mergeKernel: found originalAlloc cast:  %1 = bitcast i8* %call1 to float*, !dbg !1020
+mergeKernel: found originalAlloc ci:  %call1 = call noalias i8* @malloc(i64 40) #9, !dbg !1019
+CudaFE: found cudaConfigureCall
+mergeKernel: kernelBB: 
+kcall.configok:                                   ; preds = %for.end
+  %35 = load float*, float** %d_a, align 8, !dbg !1077
+  %36 = load float*, float** %d_b, align 8, !dbg !1078
+  %37 = load float*, float** %d_c, align 8, !dbg !1079
+  call void @fasten.ll_CudaFE__Z10vector_addPfS_S_i(float* %ldHost, float* %ldHost1, float* %37, i32 10), !dbg !1076
+  br label %kcall.end, !dbg !1076
+
+mergeKernel: kernel call:   call void @fasten.ll_CudaFE__Z10vector_addPfS_S_i(float* %ldHost, float* %ldHost1, float* %37, i32 10), !dbg !1076
+mergeKernel: kernel call:   call void @fasten.ll_CudaFE__Z10vector_addPfS_S_i(float* %ldHost, float* %ldHost1, float* %37, i32 10), !dbg !1076
+MergeKernel: blocks per grid:
+mergeKernel: Dim 1 :   %22 = load i32, i32* %blocksNeeded, align 4, !dbg !1073
+mergeKernel: Dim 2 : i32 1
+mergeKernel: Dim 3 : i32 1
+MergeKernel: threads per block:
+mergeKernel: Dim 1 : i32 256
+mergeKernel: Dim 2 : i32 1
+mergeKernel: Dim 3 : i32 1
+mergeKernel: found kernelName: _Z10vector_addPfS_S_i
+MergeKernel: found deviceKernel: 
+; Function Attrs: convergent noinline nounwind
+define dso_local void @_Z10vector_addPfS_S_i(float* %a, float* %b, float* %c, i32 %n) #0 !dbg !1011 {
+entry:
+  %a.addr = alloca float*, align 8
+  %b.addr = alloca float*, align 8
+  %c.addr = alloca float*, align 8
+  %n.addr = alloca i32, align 4
+  %i = alloca i32, align 4
+  store float* %a, float** %a.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %a.addr, metadata !1014, metadata !DIExpression()), !dbg !1015
+  store float* %b, float** %b.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %b.addr, metadata !1016, metadata !DIExpression()), !dbg !1017
+  store float* %c, float** %c.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %c.addr, metadata !1018, metadata !DIExpression()), !dbg !1019
+  store i32 %n, i32* %n.addr, align 4
+  call void @llvm.dbg.declare(metadata i32* %n.addr, metadata !1020, metadata !DIExpression()), !dbg !1021
+  call void @llvm.dbg.declare(metadata i32* %i, metadata !1022, metadata !DIExpression()), !dbg !1023
+  %0 = call i32 @llvm.nvvm.read.ptx.sreg.tid.x() #9, !dbg !1024, !range !1061
+  store i32 %0, i32* %i, align 4, !dbg !1023
+  %1 = load i32, i32* %i, align 4, !dbg !1062
+  %2 = load i32, i32* %n.addr, align 4, !dbg !1064
+  %cmp = icmp slt i32 %1, %2, !dbg !1065
+  br i1 %cmp, label %if.then, label %if.end, !dbg !1066
+
+if.then:                                          ; preds = %entry
+  %3 = load float*, float** %a.addr, align 8, !dbg !1067
+  %4 = load i32, i32* %i, align 4, !dbg !1068
+  %idxprom = sext i32 %4 to i64, !dbg !1067
+  %arrayidx = getelementptr inbounds float, float* %3, i64 %idxprom, !dbg !1067
+  %5 = load float, float* %arrayidx, align 4, !dbg !1067
+  %6 = load float*, float** %b.addr, align 8, !dbg !1069
+  %7 = load i32, i32* %i, align 4, !dbg !1070
+  %idxprom1 = sext i32 %7 to i64, !dbg !1069
+  %arrayidx2 = getelementptr inbounds float, float* %6, i64 %idxprom1, !dbg !1069
+  %8 = load float, float* %arrayidx2, align 4, !dbg !1069
+  %add = fadd contract float %5, %8, !dbg !1071
+  %9 = load float*, float** %c.addr, align 8, !dbg !1072
+  %10 = load i32, i32* %i, align 4, !dbg !1073
+  %idxprom3 = sext i32 %10 to i64, !dbg !1072
+  %arrayidx4 = getelementptr inbounds float, float* %9, i64 %idxprom3, !dbg !1072
+  store float %add, float* %arrayidx4, align 4, !dbg !1074
+  br label %if.end, !dbg !1072
+
+if.end:                                           ; preds = %if.then, %entry
+  ret void, !dbg !1075
+}
+
+MergeKernel: created new Function: 
+declare void @_Z10vector_addPfS_S_i.1(float*, float*, float*, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32)
+
+
+; Function Attrs: convergent noinline nounwind
+define dso_local void @_Z10vector_addPfS_S_i.1(float* %a, float* %b, float* %c, i32 %n, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32) #0 {
+entry:
+  %a.addr = alloca float*, align 8
+  %b.addr = alloca float*, align 8
+  %c.addr = alloca float*, align 8
+  %n.addr = alloca i32, align 4
+  %i = alloca i32, align 4
+  store float* %a, float** %a.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %a.addr, metadata !1011, metadata !DIExpression()), !dbg !1015
+  store float* %b, float** %b.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %b.addr, metadata !1016, metadata !DIExpression()), !dbg !1017
+  store float* %c, float** %c.addr, align 8
+  call void @llvm.dbg.declare(metadata float** %c.addr, metadata !1018, metadata !DIExpression()), !dbg !1019
+  store i32 %n, i32* %n.addr, align 4
+  call void @llvm.dbg.declare(metadata i32* %n.addr, metadata !1020, metadata !DIExpression()), !dbg !1021
+  call void @llvm.dbg.declare(metadata i32* %i, metadata !1022, metadata !DIExpression()), !dbg !1023
+  %12 = call i32 @llvm.nvvm.read.ptx.sreg.tid.x() #9, !dbg !1024, !range !1061
+  store i32 %12, i32* %i, align 4, !dbg !1023
+  %13 = load i32, i32* %i, align 4, !dbg !1062
+  %14 = load i32, i32* %n.addr, align 4, !dbg !1064
+  %cmp = icmp slt i32 %13, %14, !dbg !1065
+  br i1 %cmp, label %if.then, label %if.end, !dbg !1066
+
+if.then:                                          ; preds = %entry
+  %15 = load float*, float** %a.addr, align 8, !dbg !1067
+  %16 = load i32, i32* %i, align 4, !dbg !1068
+  %idxprom = sext i32 %16 to i64, !dbg !1067
+  %arrayidx = getelementptr inbounds float, float* %15, i64 %idxprom, !dbg !1067
+  %17 = load float, float* %arrayidx, align 4, !dbg !1067
+  %18 = load float*, float** %b.addr, align 8, !dbg !1069
+  %19 = load i32, i32* %i, align 4, !dbg !1070
+  %idxprom1 = sext i32 %19 to i64, !dbg !1069
+  %arrayidx2 = getelementptr inbounds float, float* %18, i64 %idxprom1, !dbg !1069
+  %20 = load float, float* %arrayidx2, align 4, !dbg !1069
+  %add = fadd contract float %17, %20, !dbg !1071
+  %21 = load float*, float** %c.addr, align 8, !dbg !1072
+  %22 = load i32, i32* %i, align 4, !dbg !1073
+  %idxprom3 = sext i32 %22 to i64, !dbg !1072
+  %arrayidx4 = getelementptr inbounds float, float* %21, i64 %idxprom3, !dbg !1072
+  store float %add, float* %arrayidx4, align 4, !dbg !1074
+  br label %if.end, !dbg !1072
+
+if.end:                                           ; preds = %if.then, %entry
+  ret void, !dbg !1075
+}
+
+mergeKernel: cudaCall2remove:   %0 = call i32 @llvm.nvvm.read.ptx.sreg.tid.x() #9, !dbg !1024, !range !1061
+mergeKernel: what does I belong to?entrymergeKernel: found originalAlloc   %h_c = alloca float*, align 8
+mergeKernel: found originalAlloc user  %ldHost5 = load float*, float** %h_c
+mergeKernel: found originalAlloc user  %63 = load float*, float** %h_c, align 8, !dbg !1114
+mergeKernel: found originalAlloc user  %55 = load float*, float** %h_c, align 8, !dbg !1102
+mergeKernel: found originalAlloc user  %38 = load float*, float** %h_c, align 8, !dbg !1080
+mergeKernel: found originalAlloc user  store float* %2, float** %h_c, align 8, !dbg !1022
+mergeKernel: found originalAlloc store:  store float* %2, float** %h_c, align 8, !dbg !1022
+mergeKernel: found originalAlloc cast:  %2 = bitcast i8* %call2 to float*, !dbg !1024
+mergeKernel: found originalAlloc ci:  %call2 = call noalias i8* @malloc(i64 40) #9, !dbg !1023
+mergeKernel: create metadata  br i1 %exitCheck.1, label %kcall.configok, label %latch.0, !tulip.doall.loop.block !1063
+mergeKernel: create metadata  br i1 %exitCheck.0, label %header.1, label %kcall.end, !tulip.doall.loop.grid !1063
+SUSAN: original arg   %ldHost = load float*, float** %h_a
+SUSAN: original arg   %ldHost1 = load float*, float** %h_b
+SUSAN: original arg   %ldHost5 = load float*, float** %h_c
+SUSAN: original arg i32 10
+SUSAN: itnum:   %22 = load i32, i32* %blocksNeeded, align 4, !dbg !1073
+SUSAN: itnum: i32 1
+SUSAN: itnum: i32 1
+SUSAN: itnum: i32 256
+SUSAN: itnum: i32 1
+SUSAN: itnum: i32 1
+mergeKernel: indvar   %indvar.0 = phi i32 [ 0, %for.end ], [ %indvar.next.0, %latch.0 ]
+mergeKernel: indvar i32 0
+mergeKernel: indvar i32 0
+mergeKernel: indvar   %indvar.1 = phi i32 [ 0, %header.0 ], [ %indvar.next.1, %latch.1 ]
+mergeKernel: indvar i32 0
+mergeKernel: indvar i32 0
+void (float*, float*, float*, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32)
+mergeKernel: new function kernel Args:   %ldHost = load float*, float** %h_a
+mergeKernel: new function kernel Args:   %ldHost1 = load float*, float** %h_b
+mergeKernel: new function kernel Args:   %ldHost5 = load float*, float** %h_c
+mergeKernel: new function kernel Args: i32 10
+mergeKernel: new function kernel Args:   %22 = load i32, i32* %blocksNeeded, align 4, !dbg !1073
+mergeKernel: new function kernel Args: i32 1
+mergeKernel: new function kernel Args: i32 1
+mergeKernel: new function kernel Args: i32 256
+mergeKernel: new function kernel Args: i32 1
+mergeKernel: new function kernel Args: i32 1
+mergeKernel: new function kernel Args:   %indvar.0 = phi i32 [ 0, %for.end ], [ %indvar.next.0, %latch.0 ]
+mergeKernel: new function kernel Args: i32 0
+mergeKernel: new function kernel Args: i32 0
+mergeKernel: new function kernel Args:   %indvar.1 = phi i32 [ 0, %header.0 ], [ %indvar.next.1, %latch.1 ]
+mergeKernel: new function kernel Args: i32 0
+mergeKernel: new function kernel Args: i32 0
